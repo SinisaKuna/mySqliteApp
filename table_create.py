@@ -10,11 +10,15 @@ def create_table_adresar(cursor):
                          ]
     create_table(cursor, "adresar", adresar_structure)
 
+
 def init_insert_adresar(connection, cursor):
     adresar_list = [
         ("Siniša", "Kuna", "Stonska 9", "31000", "Osijek", "098/275-504", "kuna.sinisa@gmail.com"),
         ("Ivan", "Kuna", "Hreljinska 19a", "10000", "Zagreb", "091/2275-504", "ivan.kuna@yahoo.com")
     ]
+
+    # names = [description[0] for description in cursor.description]
+    # names = ['ID', 'ime', 'prezime', 'ulica', 'posta', 'grad', 'telefon', 'mail']
     polja = "ime, prezime, ulica, posta, grad, telefon, mail"
     for redak in adresar_list:
         query = "insert into adresar (" + str(polja) + ") values " + str(redak)
