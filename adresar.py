@@ -49,6 +49,17 @@ class Adresar:
         self.cursor.execute(query)
         self.connection.commit()
 
+    def dodaj_cijeli_redak(self, adresar_list):
+        polja = "ime, prezime, ulica, posta, grad, telefon, mail"
+        for redak in adresar_list:
+            query = "insert into adresar (" + str(polja) + ") values " + str(redak)
+            self.cursor.execute(query)
+            self.connection.commit()
+
+
+
+
+
 
 
 
