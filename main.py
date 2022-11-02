@@ -9,21 +9,14 @@ data_base_name = 'mysqlite.db'
 # START uspostavljanje veze sa bazom
 #
 
-# # PAZI: FORSIRANO BRIŠEM mysqlite.db = TESTIRANJE
+# START PAZI!!! FORSIRANO BRIŠEM mysqlite.db dok traje TESTIRANJE
 if os.path.exists(data_base_name):
     os.remove(data_base_name)
+# END
 
-if os.path.exists(data_base_name):
-    connection = sqlite3.connect(data_base_name)
-    cursor = connection.cursor()
-else:
-    connection = sqlite3.connect(data_base_name)
-    cursor = connection.cursor()
-    table_create.inititialize_tables(connection, cursor)
+connection = table_create.connect_database(data_base_name)
+cursor = connection.cursor()
 
-#
-# END uspostavljanje veze sa bazom
-#
 
 #
 # testiranje
@@ -40,18 +33,22 @@ else:
 # ispisujem polja pomocu klase Adresar() za zadani id OK
 #
 # temp_id = 1
+#
+# adresar = Adresar(connection,  temp_id)
 
-# adresar = Adresar(connection, cursor, temp_id)
-# print(f'ime i prezime: {adresar.ime_prezime[0][0]}')
+# print(f'ime i prezime: {adresar.ime_prezime}')
+
+# temp_id = 1
+# print(Adresar(connection,  temp_id).ime_prezime)
 #
-# adresar = Adresar(connection, cursor, temp_id)
-# print(f'adresa: {adresar.adresa[0][0]}')
-#
-# adresar = Adresar(connection, cursor, temp_id)
-# print(f'e-mail: {adresar.mail[0][0]}')
-#
-# telefon = Adresar(connection, cursor, temp_id)
-# print(f'telefon: {adresar.telefon[0][0]}')
+# adresar = Adresar(connection, temp_id)
+# print(f'adresa: {adresar.adresa}')
+# #
+# adresar = Adresar(connection, temp_id)
+# print(f'e-mail: {adresar.mail}')
+# #
+# telefon = Adresar(connection, temp_id)
+# print(f'telefon: {adresar.telefon}')
 
 
 #
@@ -61,10 +58,10 @@ else:
 #     print(row)
 # print("/////////////")
 # temp_id = 1
-# adresar = Adresar(connection, cursor, temp_id)
+# adresar = Adresar(connection, temp_id)
 # adresar.brisi()
 #
-# # provjer je li obrisano
+# # provjera je li obrisano
 # for row in cursor.execute("select * from adresar"):
 #     print(row)
 
@@ -74,12 +71,11 @@ else:
 #
 # for row in cursor.execute("select * from adresar"):
 #     print(row)
-#
 # print("///////////////////////")
 #
 # podaci_za_promjenu = ['Mali', 'Pero', 'Hreljinska 19a', '10000', 'Zagreb', '099/0000-999', 'ivan.kuna@yahoo.com']
-#
-# adresar = Adresar(connection, cursor, 2)
+# temp_id = 2
+# adresar = Adresar(connection, temp_id)
 # adresar.promijeni_cijeli_redak(podaci_za_promjenu)
 # # # provjera je li promijenjeno
 # for row in cursor.execute("select * from adresar"):
@@ -100,15 +96,18 @@ else:
 #
 # dodajem zapis u bazu
 #
-for row in cursor.execute("select * from adresar"):
-    print(row)
+# for row in cursor.execute("select * from adresar"):
+#     print(row)
+#
+# print("///////////////////////")
+#
+# podaci_za_unos = [('Mali', 'Pero', 'Ulica jablanova bb', '10000', 'Zagreb', '099/0000-999', 'mali.pero@yahoo.com')]
+#
+# adresar = Adresar(connection, 0)
+# adresar.dodaj_cijeli_redak(podaci_za_unos)
+# # # provjera je li dodano
+# for row in cursor.execute("select * from adresar"):
+#     print(row)
 
-print("///////////////////////")
-
-podaci_za_unos = [('Mali', 'Pero', 'Ulica jablanova bb', '10000', 'Zagreb', '099/0000-999', 'mali.pero@yahoo.com')]
-
-adresar = Adresar(connection, cursor, 2)
-adresar.dodaj_cijeli_redak(podaci_za_unos)
-# # provjera je li dodano
 for row in cursor.execute("select * from adresar"):
     print(row)
